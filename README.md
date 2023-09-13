@@ -1,18 +1,31 @@
-# cGANs_astronomy
-# The Application of cGANs in Astronomy
-This repository contains materials covered in *The Application of cGANs* talk in the Deep and Shallow Learning Session of the National Astronomy Meeting from 3rd-7th July 2023. 
+# Anomaly Detection with cGANs
+This repository contains notebooks for extracting sources from JWST NIRcam imaging data, performing aperture photometry and isophotal photometry and the source code for the cGAN. Each notebook gives a walk through and detailed explanation of how to use the code provided.
 \
-Contained, in this repository, is a walk through of how to create galaxy cutouts using the JWST CEERS NIRcam imaging data, specifically the public data release 0.5. However, this method of creating cutouts can be used on other imaging data provided raw data and a matching data kernel.
-\
-The source code for the conditional GAN is also contained within this repository in the form of a walk-through tutorial. If you wish to implement the cGAN with your own data, please see the below section on file structure.
-
-## Data Resources
-To follow the Crop_PSF_Match notebook, the [Cosmic Evolution Early Release Survey (CEERS) data realease 0.5](https://ceers.github.io) can be found on the CEERS website [here](https://ceers.github.io/dr05.html). 
+The data is public domain JWST data as part of the CEERS survey, the [Cosmic Evolution Early Release Survey (CEERS) data realease 0.5](https://ceers.github.io) can be found on the CEERS website [here](https://ceers.github.io/dr05.html). 
 \
 Data can be downloaded from the above link.
 
 ## Data Preparation for the cGAN
-You can use the Source Detection and Aperture Photometry notebook to generate the data for the cGAN. This will generate files for each waveband with a *'.fits'* extension containing individual galaxy images. To use the cGAN, the data is loaded from each individual waveband file. An example folder structure is shown below:
+After downloading the CEERS DR0.5, the images for each filter are opened for inspection. The images are cropped into two regions from Module A of the NIRcam imaging field. This is covered in:
+
+> Crop_PSF_Match.ipynb
+
+This is followed by matching the PSF of the images to that of the F444W filter by convolving with pre-calculated kernels that can be downloaded from [here](https://www.astro.princeton.edu/~draine/Kernels/Kernels_JWST/Kernels_fits_Files/Hi_Resolution/).
+
+To prepare the data for the cGAN, source detection and extraction is used on the PSF-matched images. To do this, follow:
+
+> Source_Detection_Extraction.ipynb
+
+This will generate files for each waveband with a *'.fits'* extension containing individual galaxy images. The sources are extracted as 90x90 pixel cutouts ready to load into a Dataset folder for the cGAN.
+
+## The Network
+<img width="560" alt="image" src="https://github.com/RubyPC/Anomaly_Detection_with_cGANs/assets/106536925/cf6becbd-7dd4-4ae7-87d6-39ab19fa8e7a">
+
+To use the cGAN, follow:
+
+> cGANs_Astro.ipynb
+
+The data fed to the cGAN is loaded from each individual waveband file. An example of file structure is shown below.
 \
 <img width="472" alt="Dataset-layout" src="https://github.com/RubyPC/cGANs_in_astronomy/assets/106536925/99a173b6-2802-4867-bc4d-2755acb77dfb">
 
